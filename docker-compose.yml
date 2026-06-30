@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: cybershield-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${DB_NAME:-cybershield}
+      MYSQL_USER: ${DB_USER:-cybershield}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-cybershield_pass}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - cybershield-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ml-service:
+    build:
+      context: ./backend/python-ml
+      dockerfile: Dockerfile
+    container_name: cybershield-ml
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - cybershield-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  backend:
+    build:
+      context: ./backend/spring-boot
+      dockerfile: Dockerfile
+    container_name: cybershield-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME:-cybershield}
+      DB_USER: ${DB_USER:-cybershield}
+      DB_PASSWORD: ${DB_PASSWORD:-cybershield_pass}
+      JWT_SECRET: ${JWT_SECRET:-cybershield-jwt-secret-change-in-production}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-86400000}
+      ML_SERVICE_URL: http://ml-service:8000
+    depends_on:
+      mysql:
+        condition: service_healthy
+      ml-service:
+        condition: service_started
+    networks:
+      - cybershield-net
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cybershield-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - cybershield-net
+
+volumes:
+  mysql_data:
+
+networks:
+  cybershield-net:
+    driver: bridge
