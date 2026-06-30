@@ -27,11 +27,8 @@ CyberShield AI is a full-stack security application that detects phishing attemp
 ### URL Scanner
 ![URL Scanner](screenshots/url.png)
 
-### Scan Results
-![Scan Result](screenshots/scan.png)
-
 ### History
-![History Table](screenshots/hist.png)
+![History Table](screenshots/history.png)
 
 ### Settings
 ![Settings](screenshots/settings.png)
