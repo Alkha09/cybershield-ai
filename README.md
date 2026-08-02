@@ -1,4 +1,4 @@
-# CyberShield AI
+# CyberShield 
 
 > Enterprise-grade phishing detection platform. Scan URLs, emails, SMS, text, and screenshots for security threats using machine learning.
 
