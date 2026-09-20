@@ -1,13 +1,10 @@
 # CyberShield 
 
-> Enterprise-grade phishing detection platform. Scan URLs, emails, SMS, text, and screenshots for security threats using machine learning.
+> AI-powered phishing detection system for URLs, emails, SMS, and text-based threats.
 
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-6DB33F?logo=spring)](https://spring.io)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688?logo=fastapi)](https://fastapi.tiangolo.com)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql)](https://mysql.com)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker)](https://docker.com)
+ Live Demo
 
+ **[Try CyberShield AI](https://6a438c389c11452d1454c4e9--effulgent-daffodil-e098d1.netlify.app/)**
 ---
 
 ## Overview
