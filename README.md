@@ -83,7 +83,6 @@ docker compose up -d --build
 # Backend:   http://localhost:8080/api/health
 # ML:        http://localhost:8000/api/health
 ```
-
 ### Stop
 
 ```bash
